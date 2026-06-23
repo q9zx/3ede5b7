@@ -195,6 +195,9 @@ a {
     margin: 0 0 26px;
     color: var(--muted);
     font-size: 1.02rem;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
 }
 
 .price-row {
@@ -337,6 +340,7 @@ a {
     margin: 0;
     color: var(--muted);
     max-width: 540px;
+    text-align: left;
 }
 
 .thumbs-wrapper {
@@ -390,6 +394,15 @@ a {
 .lead-text {
     font-size: 1.06rem;
     color: #d8dfeb;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
+}
+
+.content-card > p {
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: auto;
 }
 
 .feature-list {
@@ -406,6 +419,7 @@ a {
     border: 1px solid var(--line);
     border-radius: var(--radius-md);
     color: #d8dfeb;
+    text-align: left;
 }
 
 .distribution-grid {
@@ -434,6 +448,7 @@ a {
 .benefit-card p {
     margin: 0;
     color: var(--muted);
+    text-align: left;
 }
 
 .map-card {
