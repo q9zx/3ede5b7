@@ -1,0 +1,11 @@
+{
+  "name": "Link Wasi | Anexo en El Marqués",
+  "short_name": "Link Wasi",
+  "description": "Alquiler de anexo amoblado en El Marqués, Caracas.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f6f5f0",
+  "theme_color": "#17392e",
+  "lang": "es-VE",
+  "icons": [{"src": "favicon.png", "sizes": "any", "type": "image/png"}]
+}

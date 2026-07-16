@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://q9zx.github.io/3ede5b7/abk/sitemap.xml
