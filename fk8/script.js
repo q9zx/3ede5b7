@@ -1,9 +1,11 @@
-const images=Array.from({length:20},(_,i)=>`fk8${String.fromCharCode(97+i)}.png`);
-    const gallery=document.querySelector("#gallery");
-    images.forEach((src,i)=>{const b=document.createElement("button");b.className="shot";b.setAttribute("aria-label",`Ampliar fotografía ${i+1}`);b.innerHTML=`<img src="${src}" loading="${i<3?"eager":"lazy"}" alt="Casa en Colinas de Santa Mónica, fotografía ${i+1}">`;b.onclick=()=>openBox(i);gallery.appendChild(b)});
-    const box=document.querySelector("#lightbox"),viewer=box.querySelector("img");let current=0;
-    function openBox(i){current=i;viewer.src=images[current];box.classList.add("open");document.body.classList.add("lock")}
-    function closeBox(){box.classList.remove("open");document.body.classList.remove("lock")}
-    function move(n){current=(current+n+images.length)%images.length;viewer.src=images[current]}
-    box.querySelector(".close").onclick=closeBox;box.querySelector(".prev").onclick=()=>move(-1);box.querySelector(".next").onclick=()=>move(1);
-    box.onclick=e=>{if(e.target===box)closeBox()};document.addEventListener("keydown",e=>{if(!box.classList.contains("open"))return;if(e.key==="Escape")closeBox();if(e.key==="ArrowLeft")move(-1);if(e.key==="ArrowRight")move(1)});
+const descriptions=["Vista principal de la casa","Fachada de la propiedad","Área social","Vista interior","Cocina italiana","Ambiente familiar","Terraza con vista al Ávila","Espacio para reuniones","Habitación","Baño","Habitación principal","Vestier","Jacuzzi","Family room","Espacios interiores","Área complementaria","Sótano","Vista desde la propiedad","Detalles de la casa","Entorno residencial"];
+const images=descriptions.map((alt,index)=>({src:`fk8${String.fromCharCode(97+index)}.png`,alt}));
+let currentIndex=0;
+const mainImage=document.querySelector("#mainImage"),container=document.querySelector("#thumbnailContainer"),lightbox=document.querySelector("#lightbox"),lightboxImage=document.querySelector("#lightboxImage");
+function updateImage(index){currentIndex=index;mainImage.src=images[index].src;mainImage.alt=images[index].alt;if(lightbox.classList.contains("active")){lightboxImage.src=images[index].src;lightboxImage.alt=images[index].alt}document.querySelectorAll(".thumbnail").forEach((thumb,i)=>{thumb.classList.toggle("active",i===index);thumb.setAttribute("aria-current",i===index?"true":"false")})}
+function buildGallery(){const fragment=document.createDocumentFragment();images.forEach((image,index)=>{const button=document.createElement("button"),img=document.createElement("img");button.className="thumbnail";button.type="button";button.setAttribute("aria-label",`Ver imagen ${index+1}`);img.src=image.src;img.alt=image.alt;img.loading=index<5?"eager":"lazy";button.appendChild(img);button.addEventListener("click",()=>updateImage(index));fragment.appendChild(button)});container.replaceChildren(fragment)}
+function openLightbox(){lightboxImage.src=images[currentIndex].src;lightboxImage.alt=images[currentIndex].alt;lightbox.classList.add("active");lightbox.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"}
+function closeLightbox(){lightbox.classList.remove("active");lightbox.setAttribute("aria-hidden","true");document.body.style.overflow=""}
+function move(direction){updateImage((currentIndex+direction+images.length)%images.length)}
+buildGallery();updateImage(0);
+mainImage.addEventListener("click",openLightbox);document.querySelector("#openLightboxBtn").addEventListener("click",openLightbox);document.querySelector("#closeLightboxBtn").addEventListener("click",closeLightbox);document.querySelector("#nextBtn").addEventListener("click",()=>move(1));document.querySelector("#prevBtn").addEventListener("click",()=>move(-1));lightbox.addEventListener("click",event=>{if(event.target===lightbox)closeLightbox()});document.addEventListener("keydown",event=>{if(!lightbox.classList.contains("active"))return;if(event.key==="Escape")closeLightbox();if(event.key==="ArrowRight")move(1);if(event.key==="ArrowLeft")move(-1)});
